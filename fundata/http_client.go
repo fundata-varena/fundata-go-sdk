@@ -172,6 +172,8 @@ func valueToString(val  interface{}) string {
 		str = fmt.Sprintf("%f", val)
 	case bool:
 		str = fmt.Sprintf("%t", val)
+	case string:
+		str = fmt.Sprintf("%s", val)
 	default:
 		log.Println("Not supported value type", val, t)
 		str = ""
