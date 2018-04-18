@@ -6,6 +6,16 @@ func Test_Client(t *testing.T) {
 	var key string = ""
 	var serc string = ""
 	InitClient(key, serc)
-	params := map[string]string{}
-	Get("/uri", params)
+
+	params := make(map[string]interface{})
+	params["page"] = 1
+	params["limit"] = 10
+
+	res, err := Get("/data-service/dota2/pro/league/ti/rank-player", params)
+	if err != nil {
+		t.Log("Request error", err)
+		return
+	}
+
+	t.Log("Response got", res)
 }
