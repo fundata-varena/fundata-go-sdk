@@ -1,6 +1,6 @@
 ### Varena Fundata Go SDK
 
-### Rqquires
+### Requires
 
 ### Install
 
