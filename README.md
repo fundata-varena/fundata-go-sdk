@@ -1,6 +1,6 @@
 ### Varena Fundata Go SDK
 
-### Rqquires
+### Requires
 
 ### Install
 
@@ -15,8 +15,8 @@ go get github.com/fundata-varena/fundata-go-sdk
 
 ````
 fundata.InitClient(key,serc)
-parames := map[string]string{}
-fundata.Get(uri,parames)
+params := map[string]interface{}
+fundata.Get(uri, params)
 ````
 
 ### Doc

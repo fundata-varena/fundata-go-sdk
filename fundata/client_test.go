@@ -3,9 +3,9 @@ package fundata
 import "testing"
 
 func Test_Client(t *testing.T) {
-	var key string = ""
-	var serc string = ""
-	InitClient(key, serc)
+	var key = ""
+	var secret = ""
+	InitClient(key, secret)
 
 	params := make(map[string]interface{})
 	params["page"] = 1

@@ -58,10 +58,19 @@ func InitClient(key string, secret string) {
 
 func Get(uri string, args map[string]interface{}) (response *Response, err error) {
 	fullURI := fmt.Sprintf("%s:%d%s", host, 80, uri)
+
 	resp, err := http.NewRequest("GET", fullURI, nil)
 	if err != nil {
 		log.Println("New http GET request error", fullURI)
 		return nil, err
+	}
+
+	if len(args) > 0 {
+		q :=resp.URL.Query()
+		for k, v := range args {
+			q.Add(k, valueToString(v))
+		}
+		resp.URL.RawQuery = q.Encode()
 	}
 
 	var header Header
@@ -78,20 +87,20 @@ func Get(uri string, args map[string]interface{}) (response *Response, err error
 
 	res, err := client.Do(resp)
 	if err != nil {
-		log.Println("Request GET failed", uri, err)
+		log.Println("Request GET failed", resp.URL.String(), err)
 		return nil, err
 	}
 
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		log.Println("Read GET response failed", uri, err)
+		log.Println("Read GET response failed", resp.URL.String(), err)
 		return nil, err
 	}
 
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		log.Println("Unmarshal GET response failed", uri, err, string(body))
+		log.Println("Unmarshal GET response failed", resp.URL.String(), err, string(body))
 		return nil, err
 	}
 
@@ -188,8 +197,6 @@ func buildHeader(args map[string]interface{}, header *Header, uri string) error 
 			queryStrs = append(queryStrs, fmt.Sprintf("%s=%s", k, valueToString(args[k])))
 		}
 		queryStr = strings.Join(queryStrs, "&")
-
-		log.Println("to sign str", queryStr)
 
 		argsStr = queryStr
 	} else {
