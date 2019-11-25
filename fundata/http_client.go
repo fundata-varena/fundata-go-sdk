@@ -187,7 +187,7 @@ func buildHeader(args map[string]interface{}, header *Header, uri string) error 
 	var argsStr string
 
 	// sort
-	if len(args) > 1 {
+	if len(args) > 0 {
 		var keys []string
 		for k := range args {
 			keys = append(keys, k)
