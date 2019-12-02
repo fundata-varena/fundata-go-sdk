@@ -41,6 +41,9 @@ func dialTimeout(network, addr string) (net.Conn, error) {
 }
 
 func InitClient(key string, secret string) {
+	if client != nil {
+		return
+	}
 	timeout = timeout * time.Second
 	apiKey = key
 	apiSecret = secret
